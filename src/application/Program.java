@@ -6,10 +6,7 @@ import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Program {
     public static void main(String[] args) {
@@ -36,8 +33,19 @@ public class Program {
                 ChessPosition target = UI.readChessPosition(sc);
 
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+
                 if (capturedPiece != null) {
                     captured.add(capturedPiece);
+                }
+
+                if (chessMatch.getPromoted() != null) {
+                    System.out.print("Insira a peça para promoção (B/N/R/Q): ");
+                    String type = sc.nextLine().toUpperCase();
+                    while (!type.equals("B") && !type.equals("N") && !type.equals("R") & type.equals("Q")) {
+                        System.out.print("Valor Invalido! Insira a peça para promoção (B/N/R/Q): ");
+                         type = sc.nextLine().toUpperCase();
+                    }
+                    chessMatch.replacePromotedPiece(type);
                 }
             }
             catch (ChessException e) {
